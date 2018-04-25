@@ -250,14 +250,6 @@ class Tanks():
         #print('   tank calculated pressure: ',str(self.get_highest_elevation()),'-', str(elevation),'*', str(self.density),'*',str(acceleration), ' = ', press)
         return press
 
-    def get_bottom_pressure(self):
-        '''
-        Get pressure at bottom of tank.
-        :return:
-        '''
-
-        return (self.get_highest_elevation() - self.get_lowest_elevation()) * self.density * self.acceleration + self.added_pressure
-
     def get_top_pressure(self):
         '''
         Get the pressure at the top of the tank.
@@ -496,6 +488,11 @@ class Combination():
 if __name__ == '__main__':
     import ANYstructure.example_data as ex
 
-    for load, type in zip([Loads(ex.load_bottom), Loads(ex.load_side), Loads(ex.load_static), Loads(ex.load_slamming)],
-                          ['BOTTOM', 'SIDE_SHELL', '', '']):
-        print(load.get_calculated_pressure((10,10), 3, type))
+    # for load, type in zip([Loads(ex.load_bottom), Loads(ex.load_side), Loads(ex.load_static), Loads(ex.load_slamming)],
+    #                       ['BOTTOM', 'SIDE_SHELL', '', '']):
+    #     print(load.get_calculated_pressure((10,10), 3, type))
+
+    for tank in [Tanks(ex.comp2), Tanks(ex.comp3), Tanks(ex.comp4)]:
+        #print(tank.get_calculated_pressure((10, 0), 9.81))
+        print(tank.get_tank_dnv_minimum_pressure(1.3, 0.7))
+        print(tank.get_tank_dnv_minimum_pressure(1, 1.3))
